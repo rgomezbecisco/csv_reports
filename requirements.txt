@@ -1,0 +1,2 @@
+catalystwan==0.40.2
+urllib3==2.4.0
