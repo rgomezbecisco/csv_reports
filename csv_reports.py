@@ -1,7 +1,6 @@
 import urllib3
 import csv
-import os
-import sys
+from argparse import ArgumentParser
 from catalystwan.session import create_manager_session
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -9,16 +8,14 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def get_vmanage_credentials():
 
-    try:
-        url = os.environ["VMANAGE_IP"]
-        username = os.environ["VMANAGE_USER"]
-        password = os.environ["VMANAGE_PASSWORD"]
-        port = os.environ["VMANAGE_PORT"]
-        return url, username, password, port
+    parser = ArgumentParser(description="Obtain vManage credentials from CLI arguments")
+    parser.add_argument("--VMANAGE_IP", required=True, help="VMANAGE IP or Hostname")
+    parser.add_argument("--VMANAGE_USER", required=True, help="VMANAGE Username")
+    parser.add_argument("--VMANAGE_PASSWORD", required=True, help="VMANAGE Password")
+    parser.add_argument("--VMANAGE_PORT", default="443", help="VMANAGE Port", type=int)
+    args = parser.parse_args()
 
-    except Exception as e:
-        print("Error loading credentials: {}".format(e))
-        sys.exit(1)
+    return args.VMANAGE_IP, args.VMANAGE_USER, args.VMANAGE_PASSWORD, args.VMANAGE_PORT
 
 
 def parse_data_from_get_request(session, endpoint):

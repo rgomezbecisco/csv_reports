@@ -7,7 +7,6 @@ This script connects to a Cisco vManage instance, retrieves device and tunnel st
 - Python 3.9+
 - `catalystwan` Python module installed
 - Access to a Cisco vManage instance
-- Environment variables set for vManage credentials
 
 ## Setup
 
@@ -17,25 +16,21 @@ This script connects to a Cisco vManage instance, retrieves device and tunnel st
     pip install -r requirements.txt
     ```
 
-2. Set the following environment variables (you can use the provided `samplecreds.sh`):
-    - `VMANAGE_IP`
-    - `VMANAGE_USER`
-    - `VMANAGE_PASSWORD`
-    - `VMANAGE_PORT`
-
-    Example:
-
-    ```sh
-    source samplecreds.sh
-    ```
-
 ## Usage
 
-Run the script:
+Run the script with the required CLI arguments:
 
 ```sh
-python csv_reports.py
+python csv_reports.py --VMANAGE_IP <vmanage_ip> --VMANAGE_USER <username> --VMANAGE_PASSWORD <password> [--VMANAGE_PORT <port>]
 ```
+
+Example:
+
+```sh
+python csv_reports.py --VMANAGE_IP 192.168.1.100 --VMANAGE_USER admin --VMANAGE_PASSWORD password123
+```
+
+Note: `--VMANAGE_PORT` is optional and defaults to 443.
 
 This will:
 
@@ -52,10 +47,10 @@ This will:
 
 - The script filters out SDWAN controllers, saving only edge devices.
 - Make sure your vManage credentials are correct and the API is reachable.
+- All connection parameters are now provided via CLI arguments for better security and flexibility.
 
 ## Files
 
 - [`csv_reports.py`](csv_reports.py): Main script
-- [`samplecreds.sh`](samplecreds.sh): Example credentials setup
 
 ---
